@@ -65,20 +65,29 @@
     <section id="treatment" class="treatment-section">
         <h2>Medication & Treatment Recommendations</h2>
         <p>Based on the diagnosis and medical history, we suggest treatments and medications.</p>
-        <div class="treatment-cards">
-            <!-- Cards with AI-based recommendations -->
-            <div class="card">
-                <h3>Condition: Fever</h3>
-                <p>Suggested Medication: PetParacetamol</p>
-                <p>Dosage: 5ml every 6 hours</p>
-            </div>
-            <div class="card">
-                <h3>Condition: Skin Irritation</h3>
-                <p>Suggested Treatment: Aloe Vera Cream</p>
-                <p>Application: Apply twice daily</p>
-            </div>
+    
+        <div class="form-g1">
+            <label for="animal-select" class="label-g1">Select Animal:</label>
+            <select id="animal-select" class="input-g1">
+                <option value="hen">Hen</option>
+                <option value="cow">Cow</option>
+                <option value="cat">Cat</option>
+                <option value="dog">Dog</option>
+            </select>
         </div>
+        
+        <div class="form-g1">
+            <label for="condition-select" class="label-g1">Select Condition:</label>
+            <select id="condition-select" class="input-g1">
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+        &nbsp;
+        <button id="submit-button" class="btn-g1">Submit</button>
+    
+        <div id="result1"></div>
     </section>
+    
 
     <!-- Footer -->
     <footer class="footer">
@@ -104,7 +113,7 @@
                 var cardHtml = `
         <div class="card1">
             <h2>${data.result}</h2>
-            <div class="treatment">
+            <div class="treatment1">
                 <h3>Treatment:</h3>
                 <p>${data.treatment.treatment}</p>
                 <h3>Medicines:</h3>
@@ -121,6 +130,118 @@
                 document.getElementById('result').innerText = 'An error occurred.';
             });
         });
+
+
+        const dict_cat = {
+        0: "Feline Dermatophytosis",
+        1: "Mange",
+        3: "Feline Acne"
+    };
+
+    const dict_hen = {
+        0: "AvianPox",
+        1: "FowlCholera",
+        2: "MarekDisease",
+    };
+
+    const dict_cow = {
+        0: 'Actinomycosis Lumpy Jaw ',
+        1: 'Bovine Papillomatosis', 
+        2: 'foot and mouth disease', 
+        4: 'lumpy skin disease'
+    };
+
+    const dict_dog = {
+        0: 'Conjunctivitis1',
+        1: 'Mange',
+        2: 'Ringworm',
+        3: 'Ticks',
+    };
+
+    const animalSelect = document.getElementById('animal-select');
+    const conditionSelect = document.getElementById('condition-select');
+    const submitButton = document.getElementById('submit-button');
+    const result = document.getElementById('result1');
+
+    animalSelect.addEventListener('change', function() {
+        const animal = this.value;
+        let dict;
+
+        switch (animal) {
+            case 'cat':
+                dict = dict_cat;
+                break;
+            case 'hen':
+                dict = dict_hen;
+                break;
+            case 'cow':
+                dict = dict_cow;
+                break;
+            case 'dog':
+                dict = dict_dog;
+                break;
+            default:
+                dict = {};
+        }
+
+        // Clear existing options
+        conditionSelect.innerHTML = '';
+
+        // Populate new options
+        for (const [key, value] of Object.entries(dict)) {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = value;
+            conditionSelect.appendChild(option);
+        }
+    });
+
+    submitButton.addEventListener('click', function() {
+        const animal = animalSelect.value;
+        const conditionKey = conditionSelect.value;
+        const conditions = {
+            'cat': dict_cat,
+            'hen': dict_hen,
+            'cow': dict_cow,
+            'dog': dict_dog
+        };
+        const condition = conditions[animal][conditionKey];
+        console.log("HELLo ", animal,condition)
+        // Send data to server (example URL, replace with your actual server URL)
+        fetch('/check_med', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                animal: animal,
+                condition: condition
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+
+            const medicines = data.result.medicines.join(', ');
+            const treatment = data.result.treatment;
+            result.innerHTML=`
+        <div class="card3">
+            <h3>Recommended Medicines</h3>
+            <p>${medicines}</p>
+            <h3>Treatment Plan</h3>
+            <p>${treatment}</p>
+        </div>
+    `;
+        })
+        .catch(error => {
+            result.textContent = 'Error: ' + error;
+        });
+    });
+
+
+
+
+
     </script>
 </body>
 </html>

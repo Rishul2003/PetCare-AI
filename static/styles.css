@@ -242,3 +242,69 @@ body {
     list-style-type: disc;
     padding-left: 20px;
 }
+#result1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+}
+.card3 {
+   background-color: #424242;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #424242;
+    padding: 20px;
+    width: 300px;
+    background-color: #424242; /* Black background */
+    color: #fff; /* White text */
+}
+
+.card3 h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.card3 p {
+    color: #fff;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+
+
+.form-g1 {
+    margin-bottom: 15px;
+}
+
+.label-g1 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #424242;
+}
+
+.input-g1 {
+    width: 30%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-g1 {
+    background-color: #424242;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto; /* Center the button */
+    width: 150px; /* Set the width */
+    text-align: center;
+    
+}
+.btn-g1:hover {
+    background-color: #333;
+}

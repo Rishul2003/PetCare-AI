@@ -43,7 +43,7 @@ dict_cow={
 1: 'Bovine Papillomatosis', 
 2:'foot and mouth disease', 
 3:'healthy', 
-4:'lumpy skin dsease'
+4:'lumpy skin disease'
 }
 dict_dog={
     0:'Conjunctivitis1',1: 'Mange',2: 'Ringworm',3: 'Ticks',4: 'healthy'
@@ -180,6 +180,51 @@ def upload_file():
         return jsonify({'result': f'Predicted class: {predicted_class}'})
 
     return jsonify({'result': 'No image file provided'}), 400
+
+@app.route('/check_med', methods=['POST'])
+def check_med():
+    data = request.get_json()   
+    animal = data.get('animal')
+  # Ensure it's an integer
+    cond=data.get('condition')
+    print(data.get('condition'),animal)
+    # # Dictionaries to match with animal types
+    conditions = {
+        'cat': dict_cat,
+        'hen': dict_hen,
+        'cow': dict_cow,
+        'dog': dict_dog
+    }
+    treatment={
+        'cat': dict_cat_treatment,
+        'hen': dict_hen_treatment,
+        'cow': dict_cow_treatment,
+        'dog': dict_dog_treatment
+    }
+    val2=conditions[animal]
+    print(val2)
+    matching_key = None
+    for key, value in val2.items():
+        if value == cond:
+            matching_key = key
+            break
+    print(matching_key,treatment[animal][matching_key])
+    return  jsonify({'result': treatment[animal][matching_key]})
+
+    # # Check if the animal exists in our dictionaries
+    # if animal in conditions:
+    #     condition = conditions[animal].get(condition_key, "Unknown condition")
+    # else:
+    #     return jsonify({"error": "Animal not found"}), 400
+
+    # # Return a JSON response with the animal, condition, and message
+    # response = {
+    #     "animal": animal,
+    #     "condition": condition,
+    #     "message": f"For {animal}, the condition identified is '{condition}'."
+    # }
+
+    # return jsonify(response), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

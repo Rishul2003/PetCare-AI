@@ -12,9 +12,10 @@ document.getElementById('symptom-form').addEventListener('submit', function(even
     .then(response => response.json())
     .then(data => {
         // Display the results from the server
+        console.log(data)
         document.getElementById('result').innerHTML = `
             <h3>Diagnosis Result:</h3>
-            <p>${data.result}</p>
+            <p>${data}</p>
         `;
     })
     .catch(error => {

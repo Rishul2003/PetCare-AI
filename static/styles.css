@@ -198,3 +198,47 @@ body {
     bottom: 0;
     width: 100%;
 }
+
+#result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card1 {
+    background-color: #424242;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #424242;
+    padding: 20px;
+    width: 300px;
+    background-color: #424242; /* Black background */
+    color: #fff; /* White text */
+}
+
+.card1 h2,
+.card1 p,
+.card1 h3,
+.card1 ul,
+.card1 li {
+    color: #fff; /* White text for all elements inside card1 */
+}
+
+.card1 h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card1 .treatment1 {
+    margin-top: 10px;
+}
+
+.card1 .treatment1 h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.card1 .treatment1 ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}

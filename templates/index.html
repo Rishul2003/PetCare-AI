@@ -86,6 +86,7 @@
         <p>Made by team Warriors</p>
     </footer>
     <script>
+        
         document.getElementById('symptom-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
@@ -97,7 +98,23 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('result').innerText = data.result;
+                var res=document.getElementById('result')
+
+                console.log(data)
+                var cardHtml = `
+        <div class="card1">
+            <h2>${data.result}</h2>
+            <div class="treatment">
+                <h3>Treatment:</h3>
+                <p>${data.treatment.treatment}</p>
+                <h3>Medicines:</h3>
+                <ul>
+                    ${data.treatment.medicines.map(medicine => `<li>${medicine}</li>`).join('')}
+                </ul>
+            </div>
+        </div>
+    `;
+                res.innerHTML = cardHtml;
             })
             .catch(error => {
                 console.error('Error:', error);
